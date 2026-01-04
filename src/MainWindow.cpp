@@ -47,6 +47,7 @@ void MainWindow::initTabBar()
     connect(m_tabBar, &TabBar::tabAddRequested, this, [this](){ addTab(); });
     connect(m_tabBar, &TabBar::tabCloseRequested, this, [this](int index){ removeTab(index); });
     connect(m_tabBar, &TabBar::tabBarClicked, this, [=](int index){
+        m_navigationBar->setCurrentItem("1");
         const QString routeKey = m_tabBar->tabItem(index)->routeKey();
         m_stackedWidget->setCurrentWidget(m_stackedWidget->findChild<QWidget *>(routeKey));
     });
@@ -68,7 +69,6 @@ void MainWindow::initWidget()
 {
     m_navigationBar = new NavigationBar(this);
     m_navigationBar->addItem("1", FluentIcon(FIT::QUICK_NOTE), "标签", [=](){
-        m_tabBar->show();
         if (m_tabBar->count() > 0) {
             switchWidget(m_tabBar->currentTab()->routeKey());
         } else {
@@ -77,14 +77,12 @@ void MainWindow::initWidget()
     }, true, NIP::TOP);
     // m_navigationBar->addSeparator();
     m_navigationBar->addItem("2", FluentIcon(FIT::SHOPPING_CART), "产品", [=](){
-        m_tabBar->hide();
         switchWidget("homeInterface");
     }, true, NIP::SCROLL);
     m_navigationBar->addItem("3", FluentIcon(FIT::DATE_TIME), "日期", nullptr, true, NIP::SCROLL);
     m_navigationBar->addItem("4", FluentIcon(FIT::MESSAGE), "信息框", nullptr, true, NIP::SCROLL);
     // m_navigationBar->addSeparator(NIP::BOTTOM);
     m_navigationBar->addItem("5", FluentIcon(FIT::SETTING), "设置", [=](){
-        m_tabBar->hide();
         switchWidget("settingInterface");
     }, true, NIP::BOTTOM);
     m_navigationBar->setCurrentItem("1");

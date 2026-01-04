@@ -13,6 +13,11 @@ SampleCard::SampleCard(const QString &icon, const QString &title, const QString 
     m_iconWidget = new ImageLabel(icon, this);
     m_titleLabel = new BodyLabel(title, this);
     m_subTitleLabel = new CaptionLabel(content, this);
+    QColor color = Theme::instance()->themeColor();
+    m_markIcon = new IconWidget(ColoredFluentIcon(":/res/icons/selected.svg", color, color), this);
+
+    m_markIcon->setHidden(!title.contains("Pro Max"));
+
     m_titleLabel->setContentsMargins(13, 0, 0, 0);
     m_subTitleLabel->setContentsMargins(13, 0, 0, 0);
 
@@ -27,14 +32,10 @@ void SampleCard::initWidget()
     m_iconWidget->scaledToWidth(140);
     m_iconWidget->setBorderRadius(5, 5, 5, 5);
 
+    m_markIcon->move(185 - m_markIcon->width() - 9, 9);
+
     QVBoxLayout *vBoxLayout = new QVBoxLayout(this);
-    QHBoxLayout *hBoxLayout = new QHBoxLayout();
-    hBoxLayout->addStretch();
-
-    QColor color = Theme::instance()->themeColor();
-    hBoxLayout->addWidget(new IconWidget(ColoredFluentIcon(":/res/icons/selected.svg", color, color), this));
-    vBoxLayout->addLayout(hBoxLayout);
-
+    vBoxLayout->setContentsMargins(9, 20, 9, 9);
     vBoxLayout->setAlignment(Qt::AlignVCenter);
 
     vBoxLayout->addStretch(1);

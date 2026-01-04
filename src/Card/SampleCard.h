@@ -37,6 +37,7 @@ private:
     ImageLabel *m_iconWidget;
     BodyLabel *m_titleLabel;
     CaptionLabel *m_subTitleLabel;
+    IconWidget *m_markIcon;
 
     void initWidget();
 };
